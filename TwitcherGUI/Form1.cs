@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.Remoting.Channels;
@@ -22,6 +23,18 @@ namespace TwitcherGUI
         private RootObject _ro;
         private Thread _getChannelListThread;
 
+
+        private void disableButtons()
+        {
+            refreshButton.Enabled = false;
+            playButton.Enabled = false;
+        }
+
+        private void enableButtons()
+        {
+            refreshButton.Enabled = true;
+            playButton.Enabled = true;
+        }
         public Form1()
         {
             InitializeComponent();
@@ -46,13 +59,13 @@ namespace TwitcherGUI
         {
             var streamsUri = new Uri("https://api.twitch.tv/kraken/streams");
 
-            //using (var webClient = new WebClient())
-            //{
-            var webClient = new WebClient();
-                var json = webClient.DownloadString(streamsUri);
-                // Now parse with JSON.Net
-                _ro = JsonConvert.DeserializeObject<RootObject>(json);
-            //}
+            using (var webClient = new WebClient())
+            {
+            webClient.Proxy = null;
+            var json = webClient.DownloadString(streamsUri);
+
+            _ro = JsonConvert.DeserializeObject<RootObject>(json);
+            }
 
             return _ro;
         }
@@ -86,18 +99,18 @@ namespace TwitcherGUI
         {
             if(channelsListView.Items.Count == 0)
             {
+                disableButtons();
                 _getChannelListThread.Join();
                 populateStreamListView();
+                enableButtons();
             }
             else
             {
                 _getChannelListThread = new Thread(new ThreadStart(() => _ro = getChannelList()));
                 _getChannelListThread.Start();
-                refreshButton.Enabled = false;
-                playButton.Enabled = false;
+                disableButtons();
                 _getChannelListThread.Join();
-                refreshButton.Enabled = true;
-                playButton.Enabled = true;
+                enableButtons();
                 populateStreamListView();
             }
             
