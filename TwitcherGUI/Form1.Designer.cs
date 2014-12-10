@@ -31,17 +31,16 @@
             this.channelsListView = new System.Windows.Forms.ListView();
             this.channelName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gameName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.views = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.refreshButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.playButton = new System.Windows.Forms.Button();
-            this.views = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // channelsListView
             // 
-            this.channelsListView.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.channelsListView.Alignment = System.Windows.Forms.ListViewAlignment.Default;
             this.channelsListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
@@ -71,6 +70,10 @@
             // gameName
             // 
             this.gameName.Text = "Game";
+            // 
+            // views
+            // 
+            this.views.Text = "Views";
             // 
             // refreshButton
             // 
@@ -112,10 +115,6 @@
             this.playButton.Text = "Play";
             this.playButton.UseVisualStyleBackColor = true;
             this.playButton.Click += new System.EventHandler(this.playButtonClick);
-            // 
-            // views
-            // 
-            this.views.Text = "Views";
             // 
             // Form1
             // 

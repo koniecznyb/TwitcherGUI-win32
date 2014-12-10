@@ -19,29 +19,42 @@ namespace TwitcherGUI
     {
 
         private List <Stream> channels;
-        private RootObject ro;
+        private RootObject _ro;
+        private Thread _getChannelListThread;
 
         public Form1()
         {
             InitializeComponent();
-            ro = getChannelList();
-            channels = ro.streams;
+            _getChannelListThread = new Thread(new ThreadStart(() => _ro = getChannelList()));
+            _getChannelListThread.Start();
+        }
 
-            
+        private void populateStreamListView()
+        {
+            channelsListView.Items.Clear();
+            for (int i = 0; i < 20; i++)
+            {
+                Stream stream = _ro.streams.ElementAt(i);
+                int streamViewersInt = Convert.ToInt32(stream.viewers);
+                string streamNameAndViewers = streamViewersInt.ToString("#,000");
+                string[] row = { stream.game, streamNameAndViewers };
+                channelsListView.Items.Add(stream.channel.name).SubItems.AddRange(row);
+            }
         }
 
         private RootObject getChannelList()
         {
             var streamsUri = new Uri("https://api.twitch.tv/kraken/streams");
 
-            using (var webClient = new WebClient())
-            {
+            //using (var webClient = new WebClient())
+            //{
+            var webClient = new WebClient();
                 var json = webClient.DownloadString(streamsUri);
                 // Now parse with JSON.Net
-                ro = JsonConvert.DeserializeObject<RootObject>(json);
-            }
+                _ro = JsonConvert.DeserializeObject<RootObject>(json);
+            //}
 
-            return ro;
+            return _ro;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -71,14 +84,24 @@ namespace TwitcherGUI
 
         private void refreshButtonClick(object sender, EventArgs e)
         {
-            for (int i = 0; i < 20; i++)
+            if(channelsListView.Items.Count == 0)
             {
-                Stream stream = ro.streams.ElementAt(i);
-                int streamViewersInt = Convert.ToInt32(stream.viewers);
-                string streamNameAndViewers = streamViewersInt.ToString("#,000");
-                string[] row = { stream.game, streamNameAndViewers };
-                channelsListView.Items.Add(stream.channel.name).SubItems.AddRange(row);
+                _getChannelListThread.Join();
+                populateStreamListView();
             }
+            else
+            {
+                _getChannelListThread = new Thread(new ThreadStart(() => _ro = getChannelList()));
+                _getChannelListThread.Start();
+                refreshButton.Enabled = false;
+                playButton.Enabled = false;
+                _getChannelListThread.Join();
+                refreshButton.Enabled = true;
+                playButton.Enabled = true;
+                populateStreamListView();
+            }
+            
+
         }
     }
 }
