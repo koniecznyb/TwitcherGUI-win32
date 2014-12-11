@@ -53,10 +53,10 @@
             this.channelsListView.GridLines = true;
             this.channelsListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.channelsListView.HideSelection = false;
-            this.channelsListView.Location = new System.Drawing.Point(10, 22);
+            this.channelsListView.Location = new System.Drawing.Point(10, 39);
             this.channelsListView.MultiSelect = false;
             this.channelsListView.Name = "channelsListView";
-            this.channelsListView.Size = new System.Drawing.Size(329, 368);
+            this.channelsListView.Size = new System.Drawing.Size(329, 351);
             this.channelsListView.TabIndex = 1;
             this.channelsListView.UseCompatibleStateImageBehavior = false;
             this.channelsListView.View = System.Windows.Forms.View.Details;
@@ -70,6 +70,7 @@
             // gameName
             // 
             this.gameName.Text = "Game";
+            this.gameName.Width = 120;
             // 
             // views
             // 
@@ -123,7 +124,7 @@
             this.ClientSize = new System.Drawing.Size(351, 449);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.channelsListView);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
             this.Text = "TwitcherGUI";
             this.Load += new System.EventHandler(this.Form1_Load);

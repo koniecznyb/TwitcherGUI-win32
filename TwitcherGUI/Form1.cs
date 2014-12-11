@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -49,9 +50,9 @@ namespace TwitcherGUI
             {
                 Stream stream = _ro.streams.ElementAt(i);
                 int streamViewersInt = Convert.ToInt32(stream.viewers);
-                string streamNameAndViewers = streamViewersInt.ToString("#,000");
-                string[] row = { stream.game, streamNameAndViewers };
-                channelsListView.Items.Add(stream.channel.name).SubItems.AddRange(row);
+                string viewers = streamViewersInt.ToString("#,000");
+                string[] row = { stream.game, viewers };
+                channelsListView.Items.Add(stream.channel.display_name).SubItems.AddRange(row);
             }
         }
 
@@ -90,8 +91,41 @@ namespace TwitcherGUI
 
         private void playButtonClick(object sender, EventArgs e)
         {
-            var channelName = channelsListView.SelectedItems[0].SubItems[0].Text;
+           /* var channelName = channelsListView.SelectedItems[0].SubItems[0].Text;
             //channelsListView.Items.Add();
+
+
+            // Prepare the process to run
+            ProcessStartInfo start = new ProcessStartInfo();
+            // Enter in the command line arguments, everything you would enter after the executable name itself
+            start.Arguments = "livestreamer twitch.tv/imaqtpie best"; 
+            // Enter the executable to run, including the complete path
+            //start.FileName = @"C:\Program Files (x86)\VideoLAN\VLC\vlc.exe";
+            
+            System.Diagnostics.Process.Start("CMD.exe",strCmdText);
+            // Do you want to show a console window?
+            start.WindowStyle = ProcessWindowStyle.Hidden;
+            start.CreateNoWindow = true;
+
+            // Run the external process & wait for it to finish
+            using (Process proc = Process.Start(start))
+            {
+                proc.WaitForExit();
+
+                // Retrieve the app's exit code
+                var exitCode = proc.ExitCode;
+            }
+*/
+            ProcessStartInfo start = new ProcessStartInfo();
+
+            string streamerName = channelsListView.SelectedItems[0].SubItems[0].Text;
+            string quality = "best";
+            string strCmdText = "/C livestreamer twitch.tv/" + streamerName + " " + quality;
+
+            start.FileName = "cmd.exe";
+            start.Arguments = strCmdText;
+            start.WindowStyle = ProcessWindowStyle.Hidden;
+            Process proc = Process.Start(start);
 
         }
 
