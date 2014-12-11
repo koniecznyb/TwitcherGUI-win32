@@ -34,7 +34,7 @@
             this.views = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.refreshButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.qualityComboBox = new System.Windows.Forms.ComboBox();
             this.playButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -53,7 +53,7 @@
             this.channelsListView.GridLines = true;
             this.channelsListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.channelsListView.HideSelection = false;
-            this.channelsListView.Location = new System.Drawing.Point(10, 39);
+            this.channelsListView.Location = new System.Drawing.Point(10, 12);
             this.channelsListView.MultiSelect = false;
             this.channelsListView.Name = "channelsListView";
             this.channelsListView.Size = new System.Drawing.Size(329, 351);
@@ -88,24 +88,30 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.qualityComboBox);
             this.groupBox1.Controls.Add(this.playButton);
             this.groupBox1.Controls.Add(this.refreshButton);
-            this.groupBox1.Location = new System.Drawing.Point(10, 396);
+            this.groupBox1.Location = new System.Drawing.Point(10, 369);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(327, 46);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Select game";
+            this.groupBox1.Text = "Select quality";
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
-            // comboBox1
+            // qualityComboBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(6, 17);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(143, 21);
-            this.comboBox1.TabIndex = 3;
+            this.qualityComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.qualityComboBox.FormattingEnabled = true;
+            this.qualityComboBox.Items.AddRange(new object[] {
+            "best",
+            "high",
+            "medium",
+            "mobile"});
+            this.qualityComboBox.Location = new System.Drawing.Point(6, 17);
+            this.qualityComboBox.Name = "qualityComboBox";
+            this.qualityComboBox.Size = new System.Drawing.Size(143, 21);
+            this.qualityComboBox.TabIndex = 3;
             // 
             // playButton
             // 
@@ -121,7 +127,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(351, 449);
+            this.ClientSize = new System.Drawing.Size(351, 424);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.channelsListView);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -141,7 +147,7 @@
         private System.Windows.Forms.Button refreshButton;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button playButton;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox qualityComboBox;
         private System.Windows.Forms.ColumnHeader views;
 
     }

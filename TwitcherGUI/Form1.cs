@@ -38,9 +38,12 @@ namespace TwitcherGUI
         }
         public Form1()
         {
+
             InitializeComponent();
             _getChannelListThread = new Thread(new ThreadStart(() => _ro = getChannelList()));
             _getChannelListThread.Start();
+            qualityComboBox.SelectedIndex = 0;
+
         }
 
         private void populateStreamListView()
@@ -119,13 +122,19 @@ namespace TwitcherGUI
             ProcessStartInfo start = new ProcessStartInfo();
 
             string streamerName = channelsListView.SelectedItems[0].SubItems[0].Text;
-            string quality = "best";
+            string quality = (string) qualityComboBox.SelectedItem;
             string strCmdText = "/C livestreamer twitch.tv/" + streamerName + " " + quality;
 
             start.FileName = "cmd.exe";
             start.Arguments = strCmdText;
-            start.WindowStyle = ProcessWindowStyle.Hidden;
-            Process proc = Process.Start(start);
+            //start.WindowStyle = ProcessWindowStyle.Hidden;
+            using (Process proc = Process.Start(start))
+            {
+                proc.WaitForExit();
+
+                // Retrieve the app's exit code
+                var exitCode = proc.ExitCode;
+            }
 
         }
 
